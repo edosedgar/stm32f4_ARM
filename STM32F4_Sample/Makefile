@@ -1,6 +1,6 @@
 # Sources
 
-SRCS = main.c stm32f4xx_it.c system_stm32f4xx.c 
+SRCS = main.c Nokia1616LCD.c stm32f4xx_it.c system_stm32f4xx.c 
 
 # Project name
 
@@ -26,7 +26,7 @@ CC="arm-none-eabi-gcc"
 OBJCOPY="arm-none-eabi-objcopy"
 SIZE="arm-none-eabi-size"
 
-CFLAGS  = -std=gnu99 -g -O2 -Wall -Tstm32_flash.ld
+CFLAGS  = -std=gnu99 -g -Wall -Tstm32_flash.ld
 CFLAGS += -mlittle-endian -mthumb -mthumb-interwork -nostartfiles -mcpu=cortex-m4
 CFLAGS += --specs=nano.specs
 
