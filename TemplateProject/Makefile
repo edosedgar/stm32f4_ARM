@@ -46,7 +46,7 @@ MCUFLAGS = -mcpu=cortex-m4 -mlittle-endian -mfloat-abi=hard -mfpu=fpv5-sp-d16\
 
 DEBUG_OPTIMIZE_FLAGS = -O0 -ggdb
 
-CFLAGS = -Wall -Wextra --pedantic -Werror
+CFLAGS = -Wall -Wextra --pedantic
 CFLAGS_EXTRA = -nostartfiles -nodefaultlibs -nostdlib\
 	       -fdata-sections -ffunction-sections
 
