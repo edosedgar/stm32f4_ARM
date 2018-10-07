@@ -52,7 +52,7 @@ CFLAGS_EXTRA = -nostartfiles -nodefaultlibs -nostdlib\
 
 CFLAGS += $(DEFINES) $(MCUFLAGS) $(DEBUG_OPTIMIZE_FLAGS) $(CFLAGS_EXTRA) $(INCLUDES)
 
-LDFLAGS = -static $(MCUFLAGS) -Wl,--start-group -lgcc -lc -lg -Wl,--end-group\
+LDFLAGS = -static $(MCUFLAGS) -Wl,--start-group -lgcc -lc -lg -Wl,--end-group \
 	  -Wl,--gc-sections -T STM32F407VGTx_FLASH.ld
 
 .PHONY: all clean flash erase

@@ -54,41 +54,37 @@ static void rcc_config()
         SystemCoreClock = 168000000;
 }
 
-static void uart_config(void)
+static void uart2_config(void)
 {
         /*
          * Setting UART pins
          */
         LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
         //USART1_TX
-        LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_9, LL_GPIO_MODE_ALTERNATE);
-        LL_GPIO_SetAFPin_8_15(GPIOA, LL_GPIO_PIN_9, LL_GPIO_AF_1);
-        LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_9, LL_GPIO_SPEED_FREQ_HIGH);
+        LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_2, LL_GPIO_MODE_ALTERNATE);
+        LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_2, LL_GPIO_AF_7);
+        LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_2, LL_GPIO_SPEED_FREQ_HIGH);
         //USART1_RX
-        LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_10, LL_GPIO_MODE_ALTERNATE);
-        LL_GPIO_SetAFPin_8_15(GPIOA, LL_GPIO_PIN_10, LL_GPIO_AF_1);
-        LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_10, LL_GPIO_SPEED_FREQ_HIGH);
+        LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_3, LL_GPIO_MODE_ALTERNATE);
+        LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_3, LL_GPIO_AF_7);
+        LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_3, LL_GPIO_SPEED_FREQ_HIGH);
         /*
          * USART Set clock source
          */
-        LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_USART1);
-        LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK1);
+        LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
         /*
          * USART Setting
          */
-        LL_USART_SetTransferDirection(USART1, LL_USART_DIRECTION_TX_RX);
-        LL_USART_SetParity(USART1, LL_USART_PARITY_NONE);
-        LL_USART_SetDataWidth(USART1, LL_USART_DATAWIDTH_8B);
-        LL_USART_SetStopBitsLength(USART1, LL_USART_STOPBITS_1);
-        LL_USART_SetTransferBitOrder(USART1, LL_USART_BITORDER_LSBFIRST);
-        LL_USART_SetBaudRate(USART1, SystemCoreClock,
+        LL_USART_SetTransferDirection(USART2, LL_USART_DIRECTION_TX_RX);
+        LL_USART_SetParity(USART2, LL_USART_PARITY_NONE);
+        LL_USART_SetDataWidth(USART2, LL_USART_DATAWIDTH_8B);
+        LL_USART_SetStopBitsLength(USART2, LL_USART_STOPBITS_1);
+        LL_USART_SetBaudRate(USART2, SystemCoreClock/4,
                              LL_USART_OVERSAMPLING_16, 115200);
         /*
          * USART turn on
          */
-        LL_USART_Enable(USART1);
-        while (!(LL_USART_IsActiveFlag_TEACK(USART1) &&
-                 LL_USART_IsActiveFlag_REACK(USART1)));
+        LL_USART_Enable(USART2);
         return;
 }
 
@@ -96,15 +92,15 @@ static char usart_getc(void)
 {
         char byte;
 
-        if (LL_USART_IsActiveFlag_RXNE(USART1))
-                byte = LL_USART_ReceiveData8(USART1);
+        if (LL_USART_IsActiveFlag_RXNE(USART2))
+                byte = LL_USART_ReceiveData8(USART2);
         return byte;
 }
 
 static void usart_putc(char symbol)
 {
-        LL_USART_TransmitData8(USART1, symbol);
-        while (!LL_USART_IsActiveFlag_TC(USART1));
+        LL_USART_TransmitData8(USART2, symbol);
+        while (!LL_USART_IsActiveFlag_TC(USART2));
 }
 
 static void printf_config(void)
@@ -112,6 +108,12 @@ static void printf_config(void)
         xdev_out(usart_putc);
         xdev_in(usart_getc);
         return;
+}
+
+static void gpio_config(void)
+{
+        LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOD);
+        LL_GPIO_SetPinMode(GPIOD, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
 }
 
 void NMI_Handler(void)
@@ -159,8 +161,13 @@ void SysTick_Handler(void)
 int main(void)
 {
         rcc_config();
-        uart_config();
+        gpio_config();
+        uart2_config();
         printf_config();
+
+        xprintf("Hello\n");
+        while (1) {
+        };
 
         return 0;
 }
