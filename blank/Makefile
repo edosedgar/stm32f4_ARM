@@ -55,12 +55,17 @@ CFLAGS += $(DEFINES) $(MCUFLAGS) $(DEBUG_OPTIMIZE_FLAGS) $(CFLAGS_EXTRA) $(INCLU
 LDFLAGS = -static $(MCUFLAGS) -Wl,--start-group -lgcc -lc -lg -Wl,--end-group \
 	  -Wl,--gc-sections -T STM32F407VGTx_FLASH.ld
 
-.PHONY: all clean flash erase
+.PHONY: dirs all clean flash erase
 
-all: $(PROJECT).bin $(PROJECT).asm
+all: dirs $(PROJECT).bin $(PROJECT).asm
 
 clean:
 	$(RM) $(OBJS) $(PROJECT).elf $(PROJECT).bin $(PROJECT).asm
+
+dirs: ${OUTPATH}
+
+${OUTPATH}:
+	mkdir -p ${OUTPATH}
 
 # Hardware specific
 
