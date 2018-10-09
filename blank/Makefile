@@ -11,14 +11,14 @@ HEAP_SIZE = 0x400
 
 SOURCES_S = core/startup_stm32f407xx.s
 
-SOURCES_C = $(wildcard main/*.c core/*.c plib/*.c lib/*.c)
+SOURCES_C = $(wildcard *.c core/*.c plib/*.c lib/*.c)
 
 SOURCES = $(SOURCES_S) $(SOURCES_C)
 OBJS = $(SOURCES_S:.s=.o) $(SOURCES_C:.c=.o)
 
 # Includes and Defines
 
-INCLUDES += -Imain -Icore -Iplib -Ilib
+INCLUDES += -Icore -Iplib -Ilib
 
 DEFINES = -DSTM32 -DSTM32F4 -DSTM32F407xx -DHEAP_SIZE=$(HEAP_SIZE)
 

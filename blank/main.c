@@ -116,44 +116,6 @@ static void gpio_config(void)
         LL_GPIO_SetPinMode(GPIOD, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
 }
 
-void NMI_Handler(void)
-{
-}
-
-void HardFault_Handler(void)
-{
-        while (1) {
-        }
-}
-
-void MemManage_Handler(void)
-{
-        while (1) {
-        }
-}
-
-void BusFault_Handler(void)
-{
-}
-
-void UsageFault_Handler(void)
-{
-        while (1) {
-        }
-}
-
-void SVC_Handler(void)
-{
-}
-
-void DebugMon_Handler(void)
-{
-}
-
-void PendSV_Handler(void)
-{
-}
-
 void SysTick_Handler(void)
 {
 }
