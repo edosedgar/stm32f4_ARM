@@ -72,21 +72,6 @@
 #define configUSE_COUNTING_SEMAPHORES   1
 #define configGENERATE_RUN_TIME_STATS   0
 
-#ifndef configLINKER_HEAP_BASE_SYMBOL
-  #define configLINKER_HEAP_BASE_SYMBOL           __HeapBase
-      /*!< Linker symbol used to denote the base address of the heap, used for heap memory scheme 6 (newlib) */
-#endif
-
-#ifndef configLINKER_HEAP_LIMIT_SYMBOL
-  #define configLINKER_HEAP_LIMIT_SYMBOL          __HeapLimit
-      /*!< Linker symbol used to denote the limit address of the heap, used for heap memory scheme 6 (newlib) */
-#endif
-
-#ifndef configLINKER_HEAP_SIZE_SYMBOL
-  #define configLINKER_HEAP_SIZE_SYMBOL           __heap_size
-      /*!< Linker symbol used to denote the size of the heap, used for heap memory scheme 6 (newlib) */
-#endif
-
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES           0
 #define configMAX_CO_ROUTINE_PRIORITIES (2)
